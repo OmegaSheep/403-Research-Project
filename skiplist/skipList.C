@@ -226,9 +226,8 @@ int main() {
 	for (int i = 500000; i > 0; --i) {
 		insertNode(s,i);
 	}
-	for (int i = 50; i > 0; --i) {
-		int x = skipSearch(s,i)->value;
+	for (int i = 10; i > 0; --i) {
+		deleteNode(s,i);
 	}
-	
 	return 0;
 }

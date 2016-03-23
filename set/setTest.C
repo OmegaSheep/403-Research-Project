@@ -12,8 +12,8 @@ int main() {
 	for (int i = 500000; i > 0; --i) {
 		s.insert(i);
 	}
-	for (int i = 50; i > 0; --i) {
-		auto it = s.find(i);
+	for (int i = 10; i > 0; --i) {
+		s.erase(i);
 	}
 	return 0;
 }
