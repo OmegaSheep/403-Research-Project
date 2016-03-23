@@ -1,0 +1,15 @@
+#TODO LIST
+
+#skipSearch should return a pointer to the selected item.
+
+#insert should use the pointer provided by skipSearch.
+
+#Add a delete function.
+
+#Make the integer component anything with a < than operator? (See C++ templates, should work with structs.)
+
+#Try storing the index of each node so that the list can be indexed. (ie. get the Kth item)
+
+#Compare performance to a C++ set?
+
+#Documentation and test cases.
