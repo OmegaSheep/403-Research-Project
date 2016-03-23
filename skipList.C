@@ -20,30 +20,73 @@
 
 using namespace std;
 
-typedef struct skipNode {
-	string key;
+typedef struct skipnode {
 	int value;
 	int height;
-	struct skipNode *up;
-	struct skipNode *down;
-	struct skipNode *right;
-	struct skipNode *left;
+	struct skipnode *up;
+	struct skipnode *down;
+	struct skipnode *right;
+	struct skipnode *left;
 
-	skipNode(string k, int v) : key(k), value(v) {}
-} skipNode;
+	skipnode(int v) : value(v) {}
+} skipnode;
 
-typedef struct skipList {
+typedef struct skiplist {
 	int height = 0;
 	int size = 0;
 
-	skipNode *head = new skipNode("",INT_MIN);
-	skipNode *tail = new skipNode("",INT_MAX);
+	skipnode *head = new skipnode(INT_MIN);
+	skipnode *tail = new skipnode(INT_MAX);
 
-} skipList;
+} skiplist;
+
+/* Creates an empty skiplist struct and initializes its values properly */
+struct skiplist * make_skiplist() {
+
+	skiplist *s = new skiplist;
+
+	/*Head is far right. Tail is far left.*/
+	s->head->right = s->tail;
+	s->tail->left = s->head;
+
+	/*Base layer height is 0.*/
+	s->head->height = 0;
+	s->tail->height = 0;
+
+	/*Temporary nodes to construct head and tail at all heights.*/
+	skipnode *temp1 = s->head;
+	skipnode *temp2 = s->tail;
+	for (int i = 1; i < MAXLEVEL; ++i) {
+
+		//Create next layer.
+		temp1->up = new skipnode(INT_MIN);
+		temp2->up = new skipnode(INT_MAX);
+
+		//Set next layer height.
+		temp1->up->height = i;
+		temp2->up->height = i;
+
+		//Set next layer to be head and tail to each other.
+		temp1->up->right = temp2->up;
+		temp2->up->left = temp1->up;
+
+		//The new level should refer to the old.
+		(temp1->up)->down = temp1;
+		(temp2->up)->down = temp2;
+
+		//Set the current node to be the new level.
+		temp1 = temp1->up;
+		temp2 = temp2->up;
+	}
+	//Finally. The head should be at the top of the list.
+	s->head = temp1;
+	s->tail = temp2;
+	return s;
+}
 
 /* Returns a pointer to the highest node <= K */
-struct skipNode * skipSearch(skipList *current, int K) {
-	skipNode *search = current->head;
+struct skipnode * skipSearch(skiplist *current, int K) {
+	skipnode *search = current->head;
 
 	while (search->down != NULL) {
 		search = search->down;
@@ -55,9 +98,9 @@ struct skipNode * skipSearch(skipList *current, int K) {
 }
 
 /* Inserts a skipnode into the list. Has a 1/PROB chance of stacking it. */
-void insert(skipList *current, string key, int data) {
-	skipNode *newNode = new skipNode(key,data);
-	skipNode *insertionPoint = skipSearch(current, data);
+void insert(skiplist *current, int data) {
+	skipnode *newNode = new skipnode(data);
+	skipnode *insertionPoint = skipSearch(current, data);
 
 	newNode->right = insertionPoint->right;
 	(insertionPoint->right)->left = newNode;
@@ -67,7 +110,7 @@ void insert(skipList *current, string key, int data) {
 	
 
 	int coin;
-	skipNode *temp = newNode;
+	skipnode *temp = newNode;
 
 	//Loop for stacking a node.
 	while (1) {
@@ -79,7 +122,7 @@ void insert(skipList *current, string key, int data) {
 		//Stacking code.
 		else {
 			//Stack layer on top of newNode.
-			skipNode *layer = new skipNode(key,data);
+			skipnode *layer = new skipnode(data);
 			temp->up = layer;
 			layer->down = temp;
 			layer->height = temp->height+1;
@@ -127,8 +170,8 @@ void insert(skipList *current, string key, int data) {
 }
 
 /*Prints out the entire skip lists contents.*/
-void print(skipList *current) {
-	skipNode *node1 = current->head;
+void print(skiplist *current) {
+	skipnode *node1 = current->head;
 	
 	while (node1->down != NULL) {
 		while (node1->right != NULL) {
@@ -152,52 +195,13 @@ void print(skipList *current) {
 
 int main() {
 
-	/*Ensures randomness for insertion.*/
-	srand(time(NULL));
+	srand(time(NULL));						// Sets a seed based on systime for randomness.
 
-	skipList *s = new skipList;
+	skiplist *s = make_skiplist();			// Use this function to construct skiplists.
 
-	/*Head is far right. Tail is far left.*/
-	s->head->right = s->tail;
-	s->tail->left = s->head;
-
-	/*Base layer height is 0.*/
-	s->head->height = 0;
-	s->tail->height = 0;
-
-	/*Temporary nodes to construct head and tail at all heights.*/
-	skipNode *temp1 = s->head;
-	skipNode *temp2 = s->tail;
-	for (int i = 1; i < MAXLEVEL; ++i) {
-
-		//Create next layer.
-		temp1->up = new skipNode("",INT_MIN);
-		temp2->up = new skipNode("",INT_MAX);
-
-		//Set next layer height.
-		temp1->up->height = i;
-		temp2->up->height = i;
-
-		//Set next layer to be head and tail to each other.
-		temp1->up->right = temp2->up;
-		temp2->up->left = temp1->up;
-
-		//The new level should refer to the old.
-		(temp1->up)->down = temp1;
-		(temp2->up)->down = temp2;
-
-		//Set the current node to be the new level.
-		temp1 = temp1->up;
-		temp2 = temp2->up;
-	}
-	//Finally. The head should be at the top of the list.
-	s->head = temp1;
-	s->tail = temp2;
-
-	string x = "key!";
 	for (int i = 10; i > 0; --i) {
 		int num = i;
-		insert(s,to_string(num)+x,num);
+		insert(s,num);
 	}
 	cout << s->head->right->value << "\n";
 	print(s);
