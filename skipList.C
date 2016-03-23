@@ -102,7 +102,7 @@ struct skipnode * skipSearch(skiplist *current, int K) {
 }
 
 /* Inserts a skipnode into the list. Has a 1/PROB chance of stacking it. */
-void insert(skiplist *current, int data) {
+void insertNode(skiplist *current, int data) {
 	skipnode *newNode = new skipnode(data);
 	skipnode *insertionPoint = skipSearch(current, data);
 
@@ -173,6 +173,27 @@ void insert(skiplist *current, int data) {
 	}
 }
 
+/* Deletes a node and all of its stacks. Returns -1 on failure, 1 on success */
+int deleteNode(skiplist *current, int data) {
+	skipnode *deletionPoint = skipSearch(current, data);
+	if (deletionPoint->value != data) return -1;
+	
+	while (deletionPoint->up != NULL) {
+		deletionPoint->left->right = deletionPoint->right;
+		deletionPoint->right->left = deletionPoint->left;
+		deletionPoint = deletionPoint->up;
+		free(deletionPoint->down);
+		deletionPoint->down = NULL;
+	}		
+	deletionPoint->left->right = deletionPoint->right;
+	deletionPoint->right->left = deletionPoint->left;
+	free(deletionPoint->down);
+	deletionPoint->down = NULL;
+	free(deletionPoint);
+	current->size--;
+	return 1;
+}
+
 /*Prints out the entire skip lists contents.*/
 void print(skiplist *current) {
 	skipnode *node1 = current->head;
@@ -199,15 +220,16 @@ void print(skiplist *current) {
 
 int main() {
 
-	srand(time(NULL));						// Sets a seed based on systime for randomness.
-
+	//srand(time(NULL));						// Sets a seed based on systime for randomness.
+	srand(9);
 	skiplist *s = make_skiplist();			// Use this function to construct skiplists.
 
 	for (int i = 10; i > 0; --i) {
 		int num = i;
-		insert(s,num);
+		insertNode(s,num);
 	}
-	cout << s->head->right->value << "\n";
+	print(s);
+	deleteNode(s,6);
 	print(s);
 	//cout << skipSearch(s,7)->key << "\n";
 	//cout << skipSearch(s,8) << "\n";
