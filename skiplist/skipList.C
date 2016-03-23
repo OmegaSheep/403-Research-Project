@@ -173,7 +173,7 @@ void insertNode(skiplist *current, int data) {
 	}
 }
 
-/* Deletes a node and all of its stacks. Returns -1 on failure, 1 on success */
+/* Deletes the last occurence of a node and all of its stacks. Returns -1 on failure, 1 on success */
 int deleteNode(skiplist *current, int data) {
 	skipnode *deletionPoint = skipSearch(current, data);
 	if (deletionPoint->value != data) return -1;
@@ -220,21 +220,15 @@ void print(skiplist *current) {
 
 int main() {
 
-	//srand(time(NULL));						// Sets a seed based on systime for randomness.
-	srand(9);
+	srand(time(NULL));						// Sets a seed based on systime for randomness.
 	skiplist *s = make_skiplist();			// Use this function to construct skiplists.
 
-	for (int i = 10; i > 0; --i) {
-		int num = i;
-		insertNode(s,num);
+	for (int i = 500000; i > 0; --i) {
+		insertNode(s,i);
 	}
-	print(s);
-	deleteNode(s,6);
-	print(s);
-	//cout << skipSearch(s,7)->key << "\n";
-	//cout << skipSearch(s,8) << "\n";
-	//cout << skipSearch(s,10) << "\n";
-	//cout << skipSearch(s,5) << "\n";
+	for (int i = 50; i > 0; --i) {
+		int x = skipSearch(s,i)->value;
+	}
 	
 	return 0;
 }
