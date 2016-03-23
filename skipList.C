@@ -20,6 +20,10 @@
 
 using namespace std;
 
+template <typename T> T compare(T a, T b) {
+	return a >= b;
+}
+
 typedef struct skipnode {
 	int value;
 	int height;
