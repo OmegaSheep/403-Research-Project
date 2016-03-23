@@ -15,8 +15,9 @@
 #include <string>
 #include <climits>
 
-#define MAXLEVEL 10
-#define PROB 2
+#define MAXLEVEL 10	// No node may go higher than 10 stacks.
+#define PROB 2 		// 1/PROB chance of stacking a node.
+
 using namespace std;
 
 typedef struct skipNode {
@@ -40,19 +41,20 @@ typedef struct skipList {
 
 } skipList;
 
-struct skipNode * skipSearch(skipList *current, int key) {
+/* Returns a pointer to the highest node <= K */
+struct skipNode * skipSearch(skipList *current, int K) {
 	skipNode *search = current->head;
 
 	while (search->down != NULL) {
 		search = search->down;
-		while (key >= search->right->value) {
+		while (K >= search->right->value) {
 			search = search->right;
 		}
 	}
 	return search;
 }
 
-/* Bad insert code. Needs improvement*/
+/* Inserts a skipnode into the list. Has a 1/PROB chance of stacking it. */
 void insert(skipList *current, string key, int data) {
 	skipNode *newNode = new skipNode(key,data);
 	skipNode *insertionPoint = skipSearch(current, data);
@@ -69,10 +71,10 @@ void insert(skipList *current, string key, int data) {
 
 	//Loop for stacking a node.
 	while (1) {
-		coin = rand() % 2;
+		coin = rand() % PROB;
 
-		//If Coin Flip is bad we exit.
-		if (!coin) break;
+		//A good 'coinflip' is 0. All other values do not stack.
+		if (coin) break;
 
 		//Stacking code.
 		else {
@@ -124,7 +126,7 @@ void insert(skipList *current, string key, int data) {
 	}
 }
 
-//Prints out the entire skip lists contents.
+/*Prints out the entire skip lists contents.*/
 void print(skipList *current) {
 	skipNode *node1 = current->head;
 	
@@ -151,8 +153,7 @@ void print(skipList *current) {
 int main() {
 
 	/*Ensures randomness for insertion.*/
-	//srand(time(NULL));
-	srand(2);
+	srand(time(NULL));
 
 	skipList *s = new skipList;
 
@@ -195,12 +196,12 @@ int main() {
 
 	string x = "key!";
 	for (int i = 10; i > 0; --i) {
-		int num = rand()%10;
-		if (i != 5)
+		int num = i;
 		insert(s,to_string(num)+x,num);
 	}
+	cout << s->head->right->value << "\n";
 	print(s);
-	cout << skipSearch(s,7)->value << "\n";
+	//cout << skipSearch(s,7)->key << "\n";
 	//cout << skipSearch(s,8) << "\n";
 	//cout << skipSearch(s,10) << "\n";
 	//cout << skipSearch(s,5) << "\n";
