@@ -40,40 +40,29 @@ typedef struct skipList {
 
 } skipList;
 
-int skipSearch(skipList *current, int key) {
-	int position = 0;
+struct skipNode * skipSearch(skipList *current, int key) {
 	skipNode *search = current->head;
 
 	while (search->down != NULL) {
 		search = search->down;
 		while (key >= search->right->value) {
 			search = search->right;
-			position++;
 		}
 	}
-	if (position-1 < 0) position+=1;
-	return position-1;
+	return search;
 }
 
 /* Bad insert code. Needs improvement*/
 void insert(skipList *current, string key, int data) {
 	skipNode *newNode = new skipNode(key,data);
+	skipNode *insertionPoint = skipSearch(current, data);
 
-	skipNode *first = current->head;
-
-	while(first->height != 0) {
-		first = first->down;
-	}
-
-	while (data > first->value) {
-		first = first->right;
-	}
-	newNode->left = first->left;
-	(first->left)->right = newNode;
-	first->left = newNode;
-	newNode->right = first;
+	newNode->right = insertionPoint->right;
+	(insertionPoint->right)->left = newNode;
+	insertionPoint->right = newNode;
+	newNode->left = insertionPoint;
 	current->size++;
-
+	
 
 	int coin;
 	skipNode *temp = newNode;
@@ -135,49 +124,8 @@ void insert(skipList *current, string key, int data) {
 	}
 }
 
-//Prints out the top layer.
-void print1(skipList *current) {
-	if (current->size == 0) {
-		return;
-	}
-
-    skipNode *node = current->head;
-    while(node->right != current->tail) {
-    	cout << node->right->value << " ";
-    	node = node->right;
-    } 
-    cout << "\n";
-}
-
-//Prints out every layer of the head and tail.
-void print2(skipList *current) {
-	skipNode *node1 = current->head;
-	skipNode *node2 = current->tail;
-
-	cout << "Down swing\n";
-	while (node1->down != NULL) {
-		printf("Head [Height/Val]: %d %d\n",node1->height,node1->value);
-		printf("Tail [Height/Val]: %d %d\n",node2->height,node2->value);
-		node1 = node1->down;
-		node2 = node2->down;
-	}
-	printf("Head [Height/Val]: %d %d\n",node1->height,node1->value);
-	printf("Tail [Height/Val]: %d %d\n",node2->height,node2->value);
-
-	cout << "Up swing\n";
-	while (node1->up != NULL) {
-		printf("Head [Height/Val]: %d %d\n",node1->height,node1->value);
-		printf("Tail [Height/Val]: %d %d\n",node2->height,node2->value);
-		node1 = node1->up;
-		node2 = node2->up;
-	}
-	printf("Head [Height/Val]: %d %d\n",node1->height,node1->value);
-	printf("Tail [Height/Val]: %d %d\n",node2->height,node2->value);
-	
-}
-
 //Prints out the entire skip lists contents.
-void print3(skipList *current) {
+void print(skipList *current) {
 	skipNode *node1 = current->head;
 	
 	while (node1->down != NULL) {
@@ -203,7 +151,8 @@ void print3(skipList *current) {
 int main() {
 
 	/*Ensures randomness for insertion.*/
-	srand(time(NULL));
+	//srand(time(NULL));
+	srand(2);
 
 	skipList *s = new skipList;
 
@@ -245,12 +194,13 @@ int main() {
 	s->tail = temp2;
 
 	string x = "key!";
-	for (int i = 0; i <= 10; ++i) {
-		int num = rand()%255;
+	for (int i = 10; i > 0; --i) {
+		int num = rand()%10;
+		if (i != 5)
 		insert(s,to_string(num)+x,num);
 	}
-	print3(s);
-	//cout << skipSearch(s,2) << "\n";
+	print(s);
+	cout << skipSearch(s,7)->value << "\n";
 	//cout << skipSearch(s,8) << "\n";
 	//cout << skipSearch(s,10) << "\n";
 	//cout << skipSearch(s,5) << "\n";
