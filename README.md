@@ -43,7 +43,7 @@ In addition to the structs "skipnode" and "skiplist" the following 5 functions a
 	//Returns a pointer to the highest node <= K
 	struct skipnode * skipSearch(skiplist *current, int K);
 
-	//Inserts a skipnode into the list. Has a 1/PROB chance of stacking it up to 10 times.
+	//Inserts a skipnode into the list. Has a 1/PROB chance of stacking it up to 10 times
 	void insertNode(skiplist *current, int data);
 
 	//Deletes the last occurence of a node and all of its stacks. Returns -1 on failure, 1 on success
@@ -59,15 +59,15 @@ EXPECTED PERFORMANCE (BIG O-NOTATION)
 
 Skiplist
 
-Insert - O(log(n))
-Search - O(log(n))
-Delete - O(log(n))
+	Insert - O(log(n))
+	Search - O(log(n))
+	Delete - O(log(n))
 
 C++ Set
 
-Insert - O(log(n))
-Search - O(log(n))
-Delete - O(log(n))
+	Insert - O(log(n))
+	Search - O(log(n))
+	Delete - O(log(n))
 
 --------------------------------
 ACTUAL PERFORMANCE
@@ -75,47 +75,47 @@ ACTUAL PERFORMANCE
 
 Skiplist
 
-100 Items
-Insertion Time: 0.000 seconds
-Search Time: 0.000 seconds
-Deletion Time: 0.000 seconds
+	100 Items
+		Insertion Time: 0.000 seconds
+		Search Time: 0.000 seconds
+		Deletion Time: 0.000 seconds
 
-10,000 Items
-Insertion Time: 0.002 seconds
-Search Time: 0.002 seconds
-Deletion Time: 0.002 seconds
+	10,000 Items
+		Insertion Time: 0.002 seconds
+		Search Time: 0.002 seconds
+		Deletion Time: 0.002 seconds
 
-100,000 Items
-Insertion Time: 0.019 seconds
-Search Time: 0.111 seconds
-Deletion Time: 0.125 seconds
-
-500,000 Items (Observed Variance: ~ +0.6 seconds)
-Insertion Time: 0.100 seconds
-Search Time: 7.416 seconds
-Deletion Time: 7.471 seconds
+	100,000 Items
+		Insertion Time: 0.019 seconds
+		Search Time: 0.111 seconds
+		Deletion Time: 0.125 seconds
+	
+	500,000 Items (Observed Variance: ~ +0.6 seconds)
+		Insertion Time: 0.100 seconds
+		Search Time: 7.416 seconds
+		Deletion Time: 7.471 seconds
 
 Set
 
-100 Items
-Insertion Time: 0.000 seconds
-Search Time: 0.000 seconds
-Deletion Time: 0.000 seconds
-
-10,000 Items
-Insertion Time: 0.004 seconds
-Search Time: 0.002 seconds
-Deletion Time: 0.003 seconds
-
-100,000 Items
-Insertion Time: 0.051 seconds
-Search Time: 0.028 seconds
-Deletion Time: 0.037 seconds
-
-500,000 Items
-Insertion Time: 0.293 seconds
-Search Time: 0.162 seconds
-Deletion Time: 0.216 seconds
+	100 Items
+		Insertion Time: 0.000 seconds
+		Search Time: 0.000 seconds
+		Deletion Time: 0.000 seconds
+	
+	10,000 Items
+		Insertion Time: 0.004 seconds
+		Search Time: 0.002 seconds
+		Deletion Time: 0.003 seconds
+	
+	100,000 Items
+		Insertion Time: 0.051 seconds
+		Search Time: 0.028 seconds
+		Deletion Time: 0.037 seconds
+	
+	500,000 Items
+		Insertion Time: 0.293 seconds
+		Search Time: 0.162 seconds
+		Deletion Time: 0.216 seconds
 
 --------------------------------
 CONCLUDING THOUGHTS
