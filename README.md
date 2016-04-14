@@ -4,16 +4,16 @@ Implementation of SkipList Data Structure in C/C++.
 --------------------------------
 FILE STRUCTURE
 --------------------------------
-
-skiplist/
-	makefile
-	skipList.cpp
-	skipList.hpp
-	skipTest.cpp
-
-set/
-	makefile
-	setTest.cpp
+	
+	skiplist/
+		makefile
+		skipList.cpp
+		skipList.hpp
+		skipTest.cpp
+	
+	set/
+		makefile
+		setTest.cpp
 
 --------------------------------
 USING MY TESTS
