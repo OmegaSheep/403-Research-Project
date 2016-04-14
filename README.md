@@ -95,7 +95,7 @@ Skiplist
 		Search Time: 7.416 seconds
 		Deletion Time: 7.471 seconds
 
-Set
+C++ Set
 
 	100 Items
 		Insertion Time: 0.000 seconds
