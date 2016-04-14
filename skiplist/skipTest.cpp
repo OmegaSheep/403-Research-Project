@@ -14,7 +14,7 @@ int main(int argc, char *argv[]) {
 		insertNode(s,i);
 	}
 	clock_t after = clock();
-	printf("Insertion Time: %.2lf seconds\n", double(after-before) / CLOCKS_PER_SEC);
+	printf("Insertion Time: %.3lf seconds\n", double(after-before) / CLOCKS_PER_SEC);
 
 	//Measure Search Time
 	before = clock();
@@ -22,7 +22,7 @@ int main(int argc, char *argv[]) {
 		skipSearch(s,i);
 	}
 	after = clock();
-	printf("Search Time: %.2lf seconds\n",double(after-before) / CLOCKS_PER_SEC);
+	printf("Search Time: %.3lf seconds\n",double(after-before) / CLOCKS_PER_SEC);
 
 	//Measure Deletion Time
 	before = clock();
@@ -30,7 +30,7 @@ int main(int argc, char *argv[]) {
 		deleteNode(s,i);
 	}
 	after = clock();
-	printf("Deletion Time: %.2lf seconds\n",double(after-before) / CLOCKS_PER_SEC);
+	printf("Deletion Time: %.3lf seconds\n",double(after-before) / CLOCKS_PER_SEC);
 
 	return 0;
 }

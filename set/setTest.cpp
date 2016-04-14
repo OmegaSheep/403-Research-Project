@@ -19,7 +19,7 @@ int main(int argc, char *argv[]) {
 		s.insert(i);
 	}
 	clock_t after = clock();
-	printf("Insertion Time: %.2lf seconds\n", double(after-before) / CLOCKS_PER_SEC);
+	printf("Insertion Time: %.3lf seconds\n", double(after-before) / CLOCKS_PER_SEC);
 
 	//Measure Search Time
 	before = clock();
@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
 		s.find(i);
 	}
 	after = clock();
-	printf("Search Time: %.2lf seconds\n",double(after-before) / CLOCKS_PER_SEC);
+	printf("Search Time: %.3lf seconds\n",double(after-before) / CLOCKS_PER_SEC);
 
 	//Measure Deletion Time
 	before = clock();
@@ -35,7 +35,7 @@ int main(int argc, char *argv[]) {
 		s.erase(i);
 	}
 	after = clock();
-	printf("Deletion Time: %.2lf seconds\n",double(after-before) / CLOCKS_PER_SEC);
+	printf("Deletion Time: %.3lf seconds\n",double(after-before) / CLOCKS_PER_SEC);
 
 	return 0;
 }
