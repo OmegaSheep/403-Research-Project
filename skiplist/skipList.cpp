@@ -1,52 +1,10 @@
 /* Skip List by Aedan Burnett */
-
-#include <iostream>
-#include <string>
-#include <queue>
-#include <vector>
-#include <algorithm>
-#include <sstream>
-#include <stdio.h>
-#include <stdlib.h>
-#include <bitset>
-#include <tuple>
-#include <cmath>
-#include <utility>
-#include <string>
-#include <climits>
-
-#define MAXLEVEL 10	// No node may go higher than 10 stacks.
-#define PROB 2 		// 1/PROB chance of stacking a node.
-
-using namespace std;
-
-template <typename T> T compare(T a, T b) {
-	return a >= b;
-}
-
-typedef struct skipnode {
-	int value;
-	int height;
-	struct skipnode *up;
-	struct skipnode *down;
-	struct skipnode *right;
-	struct skipnode *left;
-
-	skipnode(int v) : value(v) {}
-} skipnode;
-
-typedef struct skiplist {
-	int height = 0;
-	int size = 0;
-
-	skipnode *head = new skipnode(INT_MIN);
-	skipnode *tail = new skipnode(INT_MAX);
-
-} skiplist;
+#include "skipList.hpp"
 
 /* Creates an empty skiplist struct and initializes its values properly */
 struct skiplist * make_skiplist() {
 
+	srand(time(NULL));						// Sets a seed based on systime for randomness.
 	skiplist *s = new skiplist;
 
 	/*Head is far right. Tail is far left.*/
@@ -195,7 +153,7 @@ int deleteNode(skiplist *current, int data) {
 }
 
 /*Prints out the entire skip lists contents.*/
-void print(skiplist *current) {
+void skipPrint(skiplist *current) {
 	skipnode *node1 = current->head;
 	
 	while (node1->down != NULL) {
@@ -216,18 +174,4 @@ void print(skiplist *current) {
 			node1 = node1->right;
 		}
 	cout << node1->value << "\n";
-}
-
-int main() {
-
-	srand(time(NULL));						// Sets a seed based on systime for randomness.
-	skiplist *s = make_skiplist();			// Use this function to construct skiplists.
-
-	for (int i = 500000; i > 0; --i) {
-		insertNode(s,i);
-	}
-	for (int i = 10; i > 0; --i) {
-		deleteNode(s,i);
-	}
-	return 0;
 }

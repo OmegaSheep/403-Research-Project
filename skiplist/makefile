@@ -1,13 +1,11 @@
 #Makefile.
-#Essentially it should perform: 
-#g++ -std=c++11 -g skipList.C -o skipList
 
 CC=g++
 
-CFLAGS=-std=c++11 -g -Wall
+CFLAGS=-std=c++11 -Wall
 
-skipList: skipList.C
-	$(CC) $(CFLAGS) skipList.C -o skipList
+skipTest: skipTest.cpp skipList.cpp
+	$(CC) $(CFLAGS) skipTest.cpp skipList.cpp -o skipTest
 
 clean:
-	rm skipList
+	rm skipTest
