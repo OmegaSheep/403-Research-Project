@@ -128,9 +128,9 @@ CONCLUDING THOUGHTS
 
 With my latest changes, the Skiplist now consistently outperforms a C++ set!
 
-The variance isn't huge, but at values it consistently shaves off time. 
+The variance isn't huge, but at even the smallest of values it consistently shaves off time. 
 
-Ignoring the fact that the space complexity is probably poor, the overall running time is now very impressive.
+Ignoring the fact that the space complexity is probably poor, the overall utility is impressive.
 
 --------------------------------
 CITATIONS
