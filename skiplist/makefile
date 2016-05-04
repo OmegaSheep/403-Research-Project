@@ -2,7 +2,7 @@
 
 CC=g++
 
-CFLAGS=-std=c++11 -Wall
+CFLAGS=-std=c++11 -Wall -g
 
 skipTest: skipTest.cpp skipList.cpp
 	$(CC) $(CFLAGS) skipTest.cpp skipList.cpp -o skipTest

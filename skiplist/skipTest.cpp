@@ -4,7 +4,7 @@
 int main(int argc, char *argv[]) {
 
 	skiplist *s = make_skiplist();			// Use this function to construct skiplists.
-
+	//increaseHeight(s,20);
 	int size = (argc == 2 ? atoi(argv[1]) : 500000);
 	cout << "Using size: " << size << "\n";
 
@@ -16,6 +16,7 @@ int main(int argc, char *argv[]) {
 	clock_t after = clock();
 	printf("Insertion Time: %.3lf seconds\n", double(after-before) / CLOCKS_PER_SEC);
 
+	//skipPrint(s);
 	//Measure Search Time
 	before = clock();
 	for (int i = size; i > 0; --i) {
@@ -32,5 +33,6 @@ int main(int argc, char *argv[]) {
 	after = clock();
 	printf("Deletion Time: %.3lf seconds\n",double(after-before) / CLOCKS_PER_SEC);
 
+	printf("Height Achieved: %d\n", s->head->height + 1);
 	return 0;
 }

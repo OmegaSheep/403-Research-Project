@@ -11,7 +11,6 @@
 #include <utility>
 #include <climits>
 
-#define MAXLEVEL 10	// No node may go higher than 10 stacks.
 #define PROB 2 		// 1 / PROB chance of stacking a node.
 
 using namespace std;
@@ -28,7 +27,7 @@ typedef struct skipnode {
 } skipnode;
 
 typedef struct skiplist {
-	int height = 0;
+	int maxheight = 10;
 	int size = 0;
 
 	skipnode *head = new skipnode(INT_MIN);
@@ -48,7 +47,10 @@ void insertNode(skiplist *current, int data);
 /* Deletes the last occurence of a node and all of its stacks. Returns -1 on failure, 1 on success */
 int deleteNode(skiplist *current, int data);
 
+/* Increases the maxheight of the skiplist to h. Called by insertion method. */
+void increaseHeight(skiplist *current, int h);
+
 /*Prints out the entire skip lists contents.*/
-void print(skiplist *current);
+void skipPrint(skiplist *current);
 
 #endif

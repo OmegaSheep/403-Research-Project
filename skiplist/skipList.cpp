@@ -15,10 +15,14 @@ struct skiplist * make_skiplist() {
 	s->head->height = 0;
 	s->tail->height = 0;
 
+	/*Base layer down is NULL*/
+	s->head->down = NULL;
+	s->tail->down = NULL;
+
 	/*Temporary nodes to construct head and tail at all heights.*/
 	skipnode *temp1 = s->head;
 	skipnode *temp2 = s->tail;
-	for (int i = 1; i < MAXLEVEL; ++i) {
+	for (int i = 1; i < s->maxheight; ++i) {
 
 		//Create next layer.
 		temp1->up = new skipnode(INT_MIN);
@@ -43,6 +47,8 @@ struct skiplist * make_skiplist() {
 	//Finally. The head should be at the top of the list.
 	s->head = temp1;
 	s->tail = temp2;
+	s->head->up = NULL;
+	s->tail->up = NULL;
 	return s;
 }
 
@@ -68,8 +74,14 @@ void insertNode(skiplist *current, int data) {
 	(insertionPoint->right)->left = newNode;
 	insertionPoint->right = newNode;
 	newNode->left = insertionPoint;
+	newNode->down = NULL;
+	newNode->up = NULL;
 	current->size++;
 	
+	// Maxheight should be max(10,2[logn]) and may need adjustment
+	if ( (int)2*ceil(log(current->size)) > current->maxheight ) {
+		increaseHeight(current, (int)2*ceil(log(current->size)));
+	}
 
 	int coin;
 	skipnode *temp = newNode;
@@ -79,7 +91,10 @@ void insertNode(skiplist *current, int data) {
 		coin = rand() % PROB;
 
 		//A good 'coinflip' is 0. All other values do not stack.
-		if (coin) break;
+		if (coin) {
+			temp->up = NULL;
+			break;
+		}
 
 		//Stacking code.
 		else {
@@ -96,8 +111,7 @@ void insertNode(skiplist *current, int data) {
 
 			while (layer->height != temp->height+1) {
 				layer = layer->left;
-				while (layer->up != NULL 
-					and layer->height != temp->height+1) {
+				while (layer->up != NULL and layer->height != temp->height+1) {
 					layer = layer->up;
 				}
 			}
@@ -125,7 +139,9 @@ void insertNode(skiplist *current, int data) {
 			/*Temp is now the stacked layer*/
 			temp = temp->up;
 		}
-		if (temp->height >= MAXLEVEL-1) {
+
+		if (temp->height >= current->maxheight - 1) {
+			temp->up = NULL;
 			break;
 		}
 	}
@@ -150,6 +166,42 @@ int deleteNode(skiplist *current, int data) {
 	free(deletionPoint);
 	current->size--;
 	return 1;
+}
+
+/* Increases Maximum Height of the Skip List to h. */
+void increaseHeight(skiplist *current, int h) {
+	current->maxheight = h;
+	skipnode *temp1 = current->head;
+	skipnode *temp2 = current->tail;
+
+	while (temp1->height < h - 2) {
+		//Create next layer.
+		temp1->up = new skipnode(INT_MIN);
+		temp2->up = new skipnode(INT_MAX);
+
+		//Set next layer height.
+		temp1->up->height = temp1->height + 1;
+		temp2->up->height = temp2->height + 1;
+
+		//Set next layer to be head and tail to each other.
+		temp1->up->right = temp2->up;
+		temp2->up->left = temp1->up;
+
+		//The new level should refer to the old.
+		(temp1->up)->down = temp1;
+		(temp2->up)->down = temp2;
+
+		//Set the current node to be the new level.
+		temp1 = temp1->up;
+		temp2 = temp2->up;
+
+	}
+
+	//Finally. The head should be at the top of the list.
+	current->head = temp1;
+	current->tail = temp2;
+	current->head->up = NULL;
+	current->tail->up = NULL;
 }
 
 /*Prints out the entire skip lists contents.*/
