@@ -4,7 +4,7 @@ Implementation of SkipList Data Structure in C/C++.
 The skiplist is a data structure similar to a linked list that is used to
 contain a sorted list of items. You can insert, search and delete items all
 in logarithmic time making its functionality very similar to a set. There is
-a random element to it since it's randomly determined how high to stack an item. I chose to use P = 0.5 and Max Height = 10 since the papers I read suggested this was the best for performance. 
+a random element to it since it's randomly determined how high to stack an item. I chose to use P = 0.5 and Max Height = max(10, 2(ceiling(log(n)))) since the papers I read suggested this was the best for performance. 
 
 --------------------------------
 FILE STRUCTURE
@@ -55,7 +55,7 @@ In addition to the structs "skipnode" and "skiplist" the following 5 functions a
 	int deleteNode(skiplist *current, int data);
 
 	//Prints out the entire skip lists contents. Note that MIN_INT and MAX_INT are used to represent the left and right boundaries, which are also printed.
-	void print(skiplist *current);
+	void skipPrint(skiplist *current);
 
 
 --------------------------------
