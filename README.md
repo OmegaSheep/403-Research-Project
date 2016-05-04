@@ -86,19 +86,19 @@ Skiplist
 		Deletion Time: 0.000 seconds
 
 	10,000 Items
-		Insertion Time: 0.002 seconds
-		Search Time: 0.002 seconds
-		Deletion Time: 0.002 seconds
+		Insertion Time: 0.003 seconds
+		Search Time: 0.001 seconds
+		Deletion Time: 0.001 seconds
 
 	100,000 Items
-		Insertion Time: 0.019 seconds
-		Search Time: 0.111 seconds
-		Deletion Time: 0.125 seconds
+		Insertion Time: 0.036 seconds
+		Search Time: 0.020 seconds
+		Deletion Time: 0.014 seconds
 	
-	500,000 Items (Observed Variance: ~ +0.6 seconds)
-		Insertion Time: 0.100 seconds
-		Search Time: 7.416 seconds
-		Deletion Time: 7.471 seconds
+	500,000 Items
+		Insertion Time: 0.190 seconds
+		Search Time: 0.106 seconds
+		Deletion Time: 0.077 seconds
 
 C++ Set
 
@@ -126,14 +126,11 @@ C++ Set
 CONCLUDING THOUGHTS
 --------------------------------
 
-The good news is that the skiplist seems to compete very effectively with the C++ set even up to inputs of size 100,000. In particular,
-the insertion time remains CONSISTENTLY better for all sizes of input.
+With my latest changes, the Skiplist now consistently outperforms a C++ set!
 
-However at the 500,000 mark, the skiplist begins to struggle greatly performing almost 40 times slower on a bad run for searching and deleting items.
+The variance isn't huge, but at values it consistently shaves off time. 
 
-The variance also appears to increase somewhat; I've observed run times as high as 8.230s for the largest input size.
-
-I think a lot of this comes from slightly inefficient pointer usage, but I'm impressed at its speed for small-medium inputs.
+Ignoring the fact that the space complexity is probably poor, the overall running time is now very impressive.
 
 --------------------------------
 CITATIONS
