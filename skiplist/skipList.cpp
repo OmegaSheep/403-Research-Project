@@ -109,7 +109,7 @@ void insertNode(skiplist *current, int data) {
 				layer = layer->down;
 			}	
 
-			while (layer->height != temp->height+1) {
+			while (layer->height != temp->height+1 and layer->left != NULL) {
 				layer = layer->left;
 				while (layer->up != NULL and layer->height != temp->height+1) {
 					layer = layer->up;
@@ -125,10 +125,9 @@ void insertNode(skiplist *current, int data) {
 				layer = layer->down;
 			}	
 
-			while (layer->height != temp->height+1) {
+			while (layer->height != temp->height+1 and layer->right != NULL) {
 				layer = layer->right;
-				while (layer->up != NULL 
-					and layer->height != temp->height+1) {
+				while (layer->up != NULL and layer->height != temp->height+1) {
 					layer = layer->up;
 				}
 			}

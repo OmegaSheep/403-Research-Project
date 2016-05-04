@@ -15,7 +15,7 @@ int main(int argc, char *argv[]) {
 
 	//Measure Insertion Time
 	clock_t before = clock();
-	for (int i = size; i > 0; --i) {
+	for (int i = 1; i <= size; ++i) {
 		s.insert(i);
 	}
 	clock_t after = clock();
@@ -23,7 +23,7 @@ int main(int argc, char *argv[]) {
 
 	//Measure Search Time
 	before = clock();
-	for (int i = size; i > 0; --i) {
+	for (int i = 1; i <= size; ++i) {
 		s.find(i);
 	}
 	after = clock();
@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
 
 	//Measure Deletion Time
 	before = clock();
-	for (int i = size; i > 0; --i) {
+	for (int i = 1; i <= size; ++i) {
 		s.erase(i);
 	}
 	after = clock();
