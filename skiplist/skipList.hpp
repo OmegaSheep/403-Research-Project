@@ -1,9 +1,3 @@
-/* Skip List by Aedan Burnett */
-
-#ifndef _SKIP_LIST_H_INCLUDED
-#define _SKIP_LIST_H_INCLUDED
-
-#include <iostream>
 /*Copyright 2016 Aedan Burnett
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,6 +12,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License. */
 
+
+#ifndef _SKIP_LIST_H_INCLUDED
+#define _SKIP_LIST_H_INCLUDED
+
+#include <iostream>
 #include <vector>
 #include <stdio.h>
 #include <stdlib.h>
