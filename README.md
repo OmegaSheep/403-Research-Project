@@ -28,7 +28,11 @@ I have included a test program for skiplists as well as a test program for the C
 
 In the proper directory simply use "make" to compile my tests.
 
-Run using " > ./skipTest [INPUT SIZE]" or " > ./setTest [INPUT SIZE]" accordingly.
+Run using 
+	./skipTest [INPUT SIZE] 
+or 
+	./setTest [INPUT SIZE]
+accordingly.
 
 The tests will time and perform 3 operations: Inserting [INPUT SIZE] items, searching for every item and deleting every item.
 
